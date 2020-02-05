@@ -1,0 +1,44 @@
+.oglas {
+    border: none;
+}
+
+.button-space {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.forma {
+    width: 500px;
+    margin: 20px;
+}
+
+.sticky-meni {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.sticky-kategorije {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 80px;
+    z-index: 1;
+    background-color: white;
+    padding: 10px;
+}
+
+#kategorije-title {
+    font-size: xx-large;
+}
+
+.sticky-autor {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 30px;
+}
+
+.nazad-button {
+    /* margin-top: 30px;
+    margin-right: 20px; */
+}

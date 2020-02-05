@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Online oglasi</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <div class="sticky-meni">
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+                <button class="btn btn-success button-space" id="register-button" style="display: none;" data-toggle="modal" data-target="#registerModal">Registracija</button>
+                <button class="btn btn-primary button-space" id="login-button" style="display: none;" data-toggle="modal" data-target="#loginModal">Prijava</button>
+                <button class="btn btn-outline-primary button-space" id="logout-button" style="display: none;">Odjava</button>
+                <button class="btn btn-primary button-space" id="my-ads-button" style="display: none;">Moji oglasi</button>
+                <button class="btn btn-success button-space" id="new-ad-button" style="display: none;" data-toggle="modal" data-target="#newAdModal">Novi oglas</button>
+            </form>
+        </nav>
+
+        <img src="https://www.manfredk.com/wp-content/uploads/2018/10/facebook_advertising.jpg" style="width: 100%; height: 300px; object-fit: cover;">
+        
+        <nav class="navbar navbar-light bg-light row justify-content-center">
+            <form class="form-inline">
+                <div class="row button-space">
+                    <label for="kategorija">Kategorija&nbsp;</label>
+                    <select id="kategorija" class="form-control">
+                        <option value="/">Sve</option>
+                        <option value="/?kategorija=nekretnine">Nekretnine</option>
+                        <option value="/?kategorija=automobili">Automobili</option>
+                        <option value="/?kategorija=alati">Alati</option>
+                        <option value="/?kategorija=bicikli">Bicikli</option>
+                        <option value="/?kategorija=racunarskaoprema">Racunarska oprema</option>
+                        <option value="/?kategorija=knjige">Knjige</option>
+                        <option value="/?kategorija=konzoleigre">Konzole/Igre</option>
+                        <option value="/?kategorija=mobilnitelefoni">Mobilni telefoni</option>
+                        <option value="/?kategorija=namestaj">Namestaj</option>
+                        <option value="/?kategorija=videotv">Video/TV uredjaji</option>
+                    </select>
+                </div>
+                <button class="btn btn-warning button-space" id="trazi-button">Trazi</button>
+            </form>
+        </nav>
+    </div>
+
+    <div>
+
+        <ul class="list-group list-group-horizontal flex-wrap">
+            <% for (var ad of ads) { %>
+    
+            <a href="/oglas?id=<%= ad._id%>">
+                <li class="list-group-item oglas">
+                    <div class="card" style="width: 18rem;">
+                        <img src="<%= ad.picture %>" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= ad.title %></h5>
+                            <p class="card-text"><%= ad.location %>, <%= ad.price %>€</p>
+                        </div>
+                    </div>
+                </li>
+            </a>
+            
+            <% } %>
+        </ul>
+    </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Prijava</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form id="login-form">
+            <div class="modal-body">
+
+                        <div class="form-group">
+                            <input type="text" id="username" placeholder="korisnicko ime" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" placeholder="lozinka" class="form-control">
+                        </div>
+            </div>
+            <div class="modal-footer">
+                <div class="alert alert-danger" role="alert" id="login-error" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary" id="login-form-button">Prijava</button>
+            </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Registracija</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form id="register-form">
+            <div class="modal-body">
+
+                        <div class="form-group">
+                            <input type="text" id="register-username" placeholder="korisnicko ime" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="register-password" placeholder="lozinka" class="form-control">
+                        </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" id="register-form-button">Registracija</button>
+            </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newAdModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Novi oglas</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form id="new-ad-form">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="title" placeholder="naziv" class="form-control">
+                </div>
+                <div class="form-group">
+                    <select id="category" class="form-control">
+                        <option value="nekretnina">Nekretnina</option>
+                        <option value="automobil">Automobil</option>
+                        <option value="alat">Alat</option>
+                        <option value="bicikl">Bicikl</option>
+                        <option value="racunarskaoprema">Racunarska oprema</option>
+                        <option value="knjiga">Knjiga</option>
+                        <option value="konzolaigra">Konzola/Igra</option>
+                        <option value="mobilnitelefon">Mobilni telefon</option>
+                        <option value="namestaj">Namestaj</option>
+                        <option value="videotv">Video/TV uredjaj</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="location" placeholder="lokacija" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="price" placeholder="cena (€)" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="date" id="date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <textarea id="description" cols="30" rows="10" placeholder="opis" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="picture" placeholder="link do slike" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" id="new-ad-form-button">Dodaj</button>
+            </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myAdsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Moji oglasi</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div id="my-ads"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const traziButton = document.querySelector('#trazi-button');
+        traziButton.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const kategorija = document.querySelector('#kategorija').value;
+            window.location.href = kategorija;
+        })
+    </script>
+
+    <script>
+        const registerButton = document.querySelector('#register-button');
+        const loginButton = document.querySelector('#login-button');
+        const logoutButton = document.querySelector('#logout-button');
+        const newAdButton = document.querySelector('#new-ad-button');
+        const myAdsButton = document.querySelector('#my-ads-button');
+        registerButton.style.display = 'none';
+        loginButton.style.display = 'none';
+        logoutButton.style.display = 'none';
+        newAdButton.style.display = 'none';
+        myAdsButton.style.display = 'none';
+
+        const token = localStorage.getItem('jwt');
+        if(!token){
+            registerButton.style.display = 'block';
+            loginButton.style.display = 'block';
+            logoutButton.style.display = 'none';
+            newAdButton.style.display = 'none';
+            myAdsButton.style.display = 'none';
+        }
+        else{
+            registerButton.style.display = 'none';
+            loginButton.style.display = 'none';
+            logoutButton.style.display = 'block';
+            newAdButton.style.display = 'block';
+            myAdsButton.style.display = 'block';
+        }
+
+        registerButton.addEventListener('click', (event) => {
+            event.preventDefault();
+        })
+
+        loginButton.addEventListener('click', (event) => {
+            event.preventDefault();
+        })
+
+        myAdsButton.addEventListener('click', async (event) => {
+            event.preventDefault();
+
+            const myAds = document.querySelector('#my-ads');
+            let content = '';
+
+            const response = await fetch('/oglasi', {
+                method: 'get',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                }
+            });
+
+            const rawData = await response.json();
+            const data = rawData.ads;
+
+            data.forEach((ad) => {
+                content += `
+                    <div class="row col-12 justify-content-center">
+                        <div class="row align-items-center justify-content-end col-6">
+                            <div>${ad.title}</div>
+                        </div>
+                        <div class="col-6">
+                            <a href="/delete?id=${ad._id}"><button class="btn btn-danger">Obrisi</button></a>
+                        </div>
+                    </div>
+                    <br>
+                `;
+            });
+
+            myAds.innerHTML = content;
+
+            $('#myAdsModal').modal('show');
+        })
+
+        logoutButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            localStorage.removeItem('jwt');
+            window.location.href = '/';
+        })
+
+        newAdButton.addEventListener('click', (event) => {
+            event.preventDefault();
+        })
+    </script>
+
+<script>
+    const login = async (username, password) => {
+    const response = await fetch('/login', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: username, password: password })
+    });
+    const data = await response.json();
+    return data;
+};
+
+    const loginFormButton = document.querySelector('#login-form-button');
+    const error = document.querySelector('#login-error');
+
+    loginFormButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const username = document.querySelector('#username').value;
+        const password = document.querySelector('#password').value;
+
+        login(username, password).then(function(data) {
+            if (data.token) {
+                localStorage.setItem('jwt', data.token);
+                error.style.display = 'none';
+                window.location.href = '/';
+            } else {
+                error.style.display = 'block';
+                error.innerHTML = data.message;
+            }
+        });
+    });
+
+    const register = async (username, password) => {
+        const response = await fetch('/register', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: username, password: password })
+        });
+        return;
+    };
+
+    const registerFormButton= document.querySelector('#register-form-button');
+
+    registerFormButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const username = document.querySelector('#register-username').value;
+        const password = document.querySelector('#register-password').value;
+
+        register(username, password).then(() => {
+            window.location.href = '/';
+        })
+    });
+
+    const newAd = async (title, location, price, date, description, picture, category) => {
+        const response = await fetch('/new_ad', {
+            method: 'post',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+            },
+            body: JSON.stringify({ title, location, price, date, description, picture, category })
+        });
+        return response;
+    };
+
+        const addButton = document.querySelector('#new-ad-form-button');
+        addButton.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const title = document.querySelector('#title').value;
+            const location = document.querySelector('#location').value;
+            const price = document.querySelector('#price').value;
+            const date = document.querySelector('#date').value;
+            const description = document.querySelector('#description').value;
+            const picture = document.querySelector('#picture').value;
+            const category = document.querySelector('#category').value;
+
+            newAd(title, location, price, date, description, picture, category).then((response) => {
+                window.location.href = '/';
+            })
+        });
+</script>
+</body>
+</html>
